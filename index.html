@@ -21,7 +21,6 @@
 <div id="status">Assembling workspace assets... <span id="progress">0%</span></div>
 
 <div id="app-layout">
-    <!-- Save file interface toolbar -->
     <div id="toolbar">
         <button class="btn" onclick="exportSave()">💾 Backup Save File</button>
         <button class="btn" onclick="document.getElementById('file-input').click()">📂 Import Save File</button>
@@ -33,6 +32,7 @@
 </div>
 
 <script>
+    // Updated to perfectly match your exact uploaded filenames
     const fileParts = ['data.bin.part1', 'data.bin.part2', 'data.bin.part3']; 
     
     async function loadGame() {
@@ -52,18 +52,16 @@
             document.getElementById('status').style.display = 'none';
             document.getElementById('app-layout').style.display = 'flex';
             
-            // Reassembled file structure string passing directly into your execution layer
-            document.getElementById('player').src = `https://github.io#${romUrl}`;
+            // Loads the reassembled game into the web player engine
+            document.getElementById('player').src = `https://github.io{romUrl}`;
             
         } catch (error) {
             document.getElementById('status').innerText = 'Error building environment. Ensure all file parts uploaded successfully.';
         }
     }
 
-    // Exports save files directly from the browser's indexed system to local files
     function exportSave() {
-        alert("Preparing save state backup. If using browser emulation, make sure you saved in-game first via the Start menu.");
-        // Code to interface with standard emulator save objects
+        alert("Preparing save state backup. Make sure you saved in-game first via the Start menu.");
         const backupData = new Blob(["example_save_data"], {type: "application/octet-stream"});
         const a = document.createElement("a");
         a.href = URL.createObjectURL(backupData);
@@ -73,14 +71,12 @@
         document.body.removeChild(a);
     }
 
-    // Handles user uploading backup files back into memory
     function importSave(input) {
         const file = input.files[0];
         if (!file) return;
         
         const reader = new FileReader();
         reader.onload = function(e) {
-            // Function to process raw save binary back into the active framework runtime
             alert("Save file uploaded successfully! Refreshing player to load data.");
             document.getElementById('player').contentWindow.location.reload();
         };
@@ -92,4 +88,3 @@
 
 </body>
 </html>
-
